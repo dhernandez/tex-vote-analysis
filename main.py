@@ -13,6 +13,11 @@ import requests as requests
 
 SHOW_RESULTS_FOR = 'TEx'
 
+colors = {'GVOX': 'b', 'CUP': 'r', 'GS': 'r', 'GR': 'r', 'PRC': 'b', 'GV (EAJ-PNV)': 'b', 'FAC': 'b',
+          'GCUP-EC-GC': 'r', 'GP': 'b', 'GEH Bildu': 'r', 'Junts': 'b', 'UPN': 'b',
+          'NC-CCa-PNC': 'r', 'CdsExc': 'b', 'PDeCAT': 'b', 'BNG': 'r',
+          'GCs': 'b', 'Compromís': 'r', 'CC': 'b', 'MasPaís': 'r', 'TEx': 'g'}
+
 
 def download_files(files_folder="zip_files/"):
     base_url = 'https://www.congreso.es/opendata/votaciones?p_p_id=votaciones&p_p_lifecycle=0&p_p_state=normal' \
@@ -82,10 +87,12 @@ def process_files(files_folder="zip_files/"):
 
     combined = pd.DataFrame({SHOW_RESULTS_FOR: df_vote_type, 'mean': df_vote_type_mean})
 
-    df_same_vote.plot.bar()
+    bar_colors = [colors[y] for y in df_same_vote.keys()]
+    df_same_vote.plot.bar(color=bar_colors)
     image_same_vote = get_image()
 
-    df_same_vote_only_valid.plot.bar()
+    bar_colors = [colors[y] for y in df_same_vote_only_valid.keys()]
+    df_same_vote_only_valid.plot.bar(color=bar_colors)
     image_same_vot_yes_no = get_image()
 
     combined.plot.barh()
